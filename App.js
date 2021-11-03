@@ -1,21 +1,50 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { authService } from "./fbase";
+import Login from "./src/authStack/Login";
+import Signup from "./src/authStack/Signup";
+import Home from "./src/homeStack/Home";
+import Setting from "./src/homeStack/Setting";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => {
+
+   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+   useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if(user) {
+        setIsLoggedIn(true);
+      } else{
+        setIsLoggedIn(false);
+      }
+    });
+  }, []);
+
+    return(
+      <>
+      { isLoggedIn ? (
+        <NavigationContainer>
+          <Tab.Navigator initialRouteName="Home">
+            <Tab.Screen name='Home' component={Home} />
+            <Tab.Screen name='Setting' component={Setting} />
+          </Tab.Navigator>
+        </NavigationContainer> 
+        ) : (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Signup" component={Signup} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )}
+      </>
+    );
+};
+
+
+export default App;
