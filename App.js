@@ -6,10 +6,33 @@ import { authService } from "./fbase";
 import Login from "./src/authStack/Login";
 import Signup from "./src/authStack/Signup";
 import Home from "./src/homeStack/Home";
+import Chart from "./src/homeStack/Chart"
 import Setting from "./src/homeStack/Setting";
 
-const Stack = createNativeStackNavigator();
+const AuthStack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function HomeStackScreen() {
+  return (
+  <HomeStack.Navigator>
+    <HomeStack.Screen 
+      name="Home" 
+      component={Home}
+      options={{
+        headerShown:false,
+      }}
+    />
+    <HomeStack.Screen 
+      name="Chart" 
+      component={Chart}
+      options={{
+        headerShown:false,
+      }}
+    />
+  </HomeStack.Navigator>
+  );
+};
 
 const App = () => {
 
@@ -29,17 +52,29 @@ const App = () => {
       <>
       { isLoggedIn ? (
         <NavigationContainer>
-          <Tab.Navigator initialRouteName="Home">
-            <Tab.Screen name='Home' component={Home} />
-            <Tab.Screen name='Setting' component={Setting} />
+          <Tab.Navigator initialRouteName="HomeStackScreen">
+            <Tab.Screen 
+              name='Home' 
+              component={HomeStackScreen} 
+              options={{
+                headerShown:false,
+              }}
+            />
+            <Tab.Screen 
+              name='Setting' 
+              component={Setting} 
+              options={{
+                headerShown:false,
+              }}
+            />
           </Tab.Navigator>
         </NavigationContainer> 
         ) : (
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Signup" component={Signup} />
-          </Stack.Navigator>
+          <AuthStack.Navigator initialRouteName="Login">
+            <AuthStack.Screen name="Login" component={Login} />
+            <AuthStack.Screen name="Signup" component={Signup} />
+          </AuthStack.Navigator>
         </NavigationContainer>
       )}
       </>
