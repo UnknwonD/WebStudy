@@ -38,14 +38,16 @@ const App = () => {
 
    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-   useEffect(() => {
-    authService.onAuthStateChanged((user) => {
+   useEffect(() => { // clean up 사용?
+    return(
+      authService.onAuthStateChanged((user) => {
       if(user) {
         setIsLoggedIn(true);
       } else{
         setIsLoggedIn(false);
       }
-    });
+    })
+    );
   }, []);
 
     return(
@@ -54,7 +56,7 @@ const App = () => {
         <NavigationContainer>
           <Tab.Navigator initialRouteName="HomeStackScreen">
             <Tab.Screen 
-              name='Home' 
+              name='Main' 
               component={HomeStackScreen} 
               options={{
                 headerShown:false,

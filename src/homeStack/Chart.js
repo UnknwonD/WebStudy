@@ -1,14 +1,24 @@
-import React from "react";
-import { Button, Text, View, StyleSheet, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { Button, Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { authService } from "../../fbase";
+import Visualization from "../components/Visualization";
 
 const user = authService.currentUser;
 
 function Chart() {
+
+    const [Scores, setScores] = useState([]);
+
+
     return (
-    <ScrollView>
-      <Text>Spaces for chart</Text>
-    </ScrollView>
+    <SafeAreaView>
+        <ScrollView>
+            <Text>점수를 입력하세요</Text>
+            <TextInput placeholder='1월' onChangeText={() => setScores()} />
+            <Visualization />
+        </ScrollView>
+    </SafeAreaView>
     );
   };
 

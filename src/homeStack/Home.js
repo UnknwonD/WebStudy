@@ -3,13 +3,14 @@ import React from "react";
 import { Button, Text, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { authService } from "../../fbase";
+import { Summation_Chart } from "../components/Visualization";
 
 const user = authService.currentUser;
 
 function Home({navigation}) {
     return (
-      <SafeAreaView>
-        <ScrollView>
+      <ScrollView>
+        <SafeAreaView>
           <View style={styles.upperCtn}>
             {user ? (
                 <Text>{user.displayName}님 안녕하세요</Text>
@@ -22,15 +23,15 @@ function Home({navigation}) {
           <View style={styles.middleCtn}>
             <View style={{flex:1,}}>
               <TouchableOpacity onPress={() => {navigation.navigate("Chart")}}>
-                <Text>차트보기</Text>
+                <Summation_Chart />
               </TouchableOpacity>
             </View>
             <View>
             <Button title="Console" onPress={() => {console.log(authService);}} />
             </View>
           </View>
+          </SafeAreaView>
         </ScrollView>
-      </SafeAreaView>
     );
   };
 
