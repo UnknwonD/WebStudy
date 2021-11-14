@@ -1,6 +1,7 @@
 import { updateProfile } from "@firebase/auth";
 import React, {useState} from "react";
 import { Button, Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { authService } from "../../fbase";
 
 
@@ -8,6 +9,7 @@ import { authService } from "../../fbase";
 export default function Setting() {
 
     const [nickname, setNickname] = useState("");
+    const [goalCo, setGoalCo] = useState("");
 
     const onPressSaveName = () => {
         updateProfile(authService.currentUser, {
@@ -20,25 +22,36 @@ export default function Setting() {
     };
     
     return (
-        <ScrollView>
-            <View style={styles.upperCtn} >
-                <Text>이름 변경</Text>
-                <TextInput 
-                    style={styles.lgnbox} 
-                    keyboardType='default' 
-                    placeholder="NickName"
-                    value={nickname}
-                    onChangeText={(nickname) => {
-                        setNickname(nickname);
-                        console.log({nickname});
-                    }}
-                />
-                <Button title="저장" onPress={onPressSaveName} />
-            </View>
-            <View style={styles.middleCtn}>
-
-            </View>
-        </ScrollView>
+            <ScrollView>
+                <SafeAreaView>
+                    <View style={styles.upperCtn} >
+                        <Text>이름 변경</Text>
+                        <TextInput 
+                            keyboardType='default' 
+                            placeholder="NickName"
+                            value={nickname}
+                            onChangeText={(nickname) => {
+                                setNickname(nickname);
+                                console.log({nickname});
+                            }}
+                        />
+                        <Button title="저장" onPress={onPressSaveName} />
+                        <Text>목표 대학 설정</Text>
+                        <TextInput 
+                            keyboardType='default' 
+                            placeholder="College"
+                            value={goalCo}
+                            onChangeText={(goalCo) => {
+                                setGoalCo(goalCo);
+                                console.log({goalCo});
+                            }}
+                        />
+                        
+                    </View>
+                    <View style={styles.middleCtn}>
+                    </View>
+                </SafeAreaView>
+            </ScrollView>
     );
 };
 
@@ -56,11 +69,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#C8E367',
     },
-    lgnbtn: {
-        alignItems:"center",
-        backgroundColor: '#FEC28E',
-        marginTop:30,
-        padding:15,
-        borderWidth:1,
-      },  
+      
 });
