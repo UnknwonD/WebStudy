@@ -6,4 +6,4 @@ from django.shortcuts import render
 # python manage.py runserver
 
 def hello_world(request):
-    return render(request, 'base.html')
+    return render(request, 'accountapp/index.html')
