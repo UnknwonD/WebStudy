@@ -1,0 +1,15 @@
+.logo {
+    margin-top: 1rem;
+    font-family: 'Lobster', cursive;
+}
+.menu_footer {
+    font-size: 0.6rem;
+}
+.box_footer {
+    text-align: center;
+    margin-top: 2rem;
+}
+.box_header {
+    text-align: center;
+    margin: 2rem 0;
+}
