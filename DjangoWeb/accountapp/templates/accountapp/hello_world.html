@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div style="border-radius: 1rem; margin: 2rem; text-align: center">
+        <h1 style="font-family: 'lobster', cursive;">
+            Hello_world List
+        </h1>
+
+        <!--서버에 보내는 명세서, 꾸러미 같은거 = form / csrf는 장고에서 사용하는 보안토큰 Post 메소드 사용시 반드시 써야됨-->
+        <form action="/account/hello_world/" method="post">
+            {% csrf_token %}
+            <div>
+                <input type="text" name="hello_world_input" />
+            </div>
+            <div>
+                <!-- class는 bootstrap 에 존재하는 클래스를 이용한거임 따로 스타일 적용안해도 바로 디자인됨. -->
+                <input type="submit" class="btn btn-primary" value="POST"/>
+            </div>
+
+        </form>
+        {% if hello_world_list %}
+            {% for hello_world in hello_world_list %}
+                <h4>
+                    {{ hello_world.text }}
+                </h4>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}
